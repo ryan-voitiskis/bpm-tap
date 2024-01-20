@@ -9,7 +9,7 @@ const state = reactive({
   initialTime: 0,
   showBpm: false,
   showTapPrompt: true,
-  theme: "dark" as "dark" | "light",
+  theme: "dark" as "dark" | "light", // TODO
 })
 
 function reset() {
@@ -50,11 +50,11 @@ const lastBpmColour = computed(() => getBPMColour(state.lastBpm, state.theme))
 
 <template>
   <div @click="tap()" id="tap_button">
-    <span v-if="state.lastBpm !== 0" id="last">
-      <span id="last_label">LAST:</span> {{ state.lastBpm.toFixed(1) }}
-    </span>
-    <span id="tap_prompt" v-if="state.showTapPrompt">TAP</span>
-    <span id="current_bpm" v-else-if="state.showBpm">
+    <div v-if="state.lastBpm !== 0" id="last">
+      <span id="last_label">LAST: </span>{{ state.lastBpm.toFixed(1) }}
+    </div>
+    <span v-if="state.showTapPrompt" id="tap_prompt">TAP</span>
+    <span v-else-if="state.showBpm" id="current_bpm" class="number">
       {{ state.bpm.toFixed(1) }}
     </span>
   </div>
@@ -69,11 +69,7 @@ const lastBpmColour = computed(() => getBPMColour(state.lastBpm, state.theme))
   color: white;
   font-weight: 600;
   user-select: none;
-  display: flex;
-  justify-content: center;
-  padding-top: 5%;
   transition: background-color 100ms linear;
-  z-index: 2;
 }
 
 #tap_prompt {
@@ -88,24 +84,40 @@ const lastBpmColour = computed(() => getBPMColour(state.lastBpm, state.theme))
 }
 
 #current_bpm {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: baseline;
+  display: flex;
+  margin-top: 10rem;
   font-size: 7rem;
   font-weight: 600;
   z-index: 2;
 }
 
 #last {
+  position: relative;
+  justify-content: center;
+  align-items: baseline;
+  display: flex;
+  width: 100%;
+  height: 6rem;
+  background-color: v-bind(lastBpmColour);
   color: #fff;
   font-weight: 600;
   font-size: 3rem;
   z-index: 2;
   #last_label {
     font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: 600;
     margin-right: 0.5rem;
   }
+}
+#last::after {
+  content: "";
+  position: absolute;
+  top: 6rem;
+  left: 0;
+  right: 0;
+  height: 6rem;
+  background: linear-gradient(to bottom, v-bind(lastBpmColour), transparent);
 }
 </style>
