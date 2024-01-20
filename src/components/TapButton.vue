@@ -9,7 +9,6 @@ const state = reactive({
   initialTime: 0,
   showBpm: false,
   showTapPrompt: true,
-  lastSaved: null as number | null,
   theme: "dark" as "dark" | "light",
 })
 
@@ -24,7 +23,6 @@ function reset() {
 let timeout = setTimeout(reset, 0)
 
 function tap() {
-  console.log("tap")
   if (state.tapCount === 0) {
     state.initialTime = Date.now()
     state.showTapPrompt = false
@@ -37,91 +35,77 @@ function tap() {
   timeout = setTimeout(reset, 2000)
 }
 
-const bpmColour = computed(() =>
-  state.bpm ? getBPMColour(state.bpm, state.theme) : "white",
-)
-
-const savedBpmColour = computed(() =>
-  state.lastSaved ? getBPMColour(state.lastSaved, state.theme) : null,
+const backgroundColour = computed(() =>
+  state.bpm
+    ? getBPMColour(state.bpm, state.theme)
+    : state.lastBpm
+      ? lastBpmColour.value
+      : state.theme === "dark"
+        ? "#1b1e20"
+        : "#f5f5f5",
 )
 
 const lastBpmColour = computed(() => getBPMColour(state.lastBpm, state.theme))
 </script>
 
 <template>
-  <span v-if="state.lastSaved" class="saved">
-    Saved:&nbsp;
-    <span class="saved-bpm">
-      {{ state.lastSaved.toFixed(1) }}
+  <div @click="tap()" id="tap_button">
+    <span v-if="state.lastBpm !== 0" id="last">
+      <span id="last_label">LAST:</span> {{ state.lastBpm.toFixed(1) }}
     </span>
-  </span>
-  <span v-if="state.lastBpm !== 0" class="last">
-    Last:&nbsp;
-    <span class="last-bpm">
-      {{ state.lastBpm.toFixed(1) }}
+    <span id="tap_prompt" v-if="state.showTapPrompt">TAP</span>
+    <span id="current_bpm" v-else-if="state.showBpm">
+      {{ state.bpm.toFixed(1) }}
     </span>
-  </span>
-  <div @click="tap()" class="bpm-tapper">
-    <span v-if="state.bpm !== 0">{{ state.bpm.toFixed(1) }}</span>
-    <span v-if="state.showTapPrompt" class="tap-text">Tap</span>
   </div>
 </template>
 
 <style scoped lang="scss">
-.last,
-.saved {
-  color: var(--bpm-last-saved-label);
-  font-weight: 600;
-  position: absolute;
-  height: 5%;
-  width: 10%;
-  right: 14%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-}
-
-.saved {
-  bottom: 37%;
-  .saved-bpm {
-    color: v-bind(savedBpmColour);
-  }
-}
-
-.last {
-  bottom: 34%;
-  .last-bpm {
-    color: v-bind(lastBpmColour);
-  }
-}
-
-.bpm-tapper {
+#tap_button {
+  background-color: v-bind(backgroundColour);
   width: 100%;
   height: 100%;
   cursor: pointer;
-  color: v-bind(bpmColour);
+  color: white;
   font-weight: 600;
   user-select: none;
   display: flex;
-  background: var(--deck-button);
-  border: 3px solid var(--deck-button-border);
-  border-radius: 50%;
   justify-content: center;
-  align-items: center;
-  transition:
-    outline-color 450ms cubic-bezier(0.19, 1, 0.22, 1),
-    outline-offset 450ms cubic-bezier(0.19, 1, 0.22, 1);
-  outline: 3px dotted;
-  outline-color: transparent;
+  padding-top: 5%;
+  transition: background-color 100ms linear;
   z-index: 2;
-  &:active {
-    outline-color: v-bind(bpmColour);
-    outline-offset: 8px;
-  }
 }
 
-.tap-text {
-  color: var(--bpm-tap-label);
+#tap_prompt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 2;
+}
+
+#current_bpm {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 7rem;
+  font-weight: 600;
+  z-index: 2;
+}
+
+#last {
+  color: #fff;
+  font-weight: 600;
+  font-size: 3rem;
+  z-index: 2;
+  #last_label {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-right: 0.5rem;
+  }
 }
 </style>
