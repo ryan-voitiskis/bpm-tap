@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "Lexend";
-  src: url("./Lexend-VariableFont_wght.ttf") format("truetype");
+  font-family: "Sono";
+  src: url("./Sono-VariableFont.ttf") format("truetype");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -18,20 +18,7 @@ body {
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family:
-    "Lexend",
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Fira Sans",
-    "Droid Sans",
-    "Helvetica Neue",
-    sans-serif;
+  font-family: "Sono", monospace;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

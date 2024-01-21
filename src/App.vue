@@ -64,10 +64,12 @@ const lastBpmColour = computed(() =>
   <main @click="tap()" id="tap_button">
     <div v-if="lastBpmColour" id="last">
       <span v-if="state.lastBpm" id="last_label">LAST: </span>
-      {{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}
+      <span class="number">
+        {{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}
+      </span>
     </div>
     <span v-if="state.showTapPrompt" id="tap_prompt">TAP</span>
-    <span v-else-if="state.showBpm" id="current_bpm">
+    <span v-else-if="state.showBpm" id="current_bpm" class="number">
       {{ state.bpm.toFixed(1) }}
     </span>
   </main>
@@ -94,6 +96,9 @@ const lastBpmColour = computed(() =>
   font-weight: 600;
   color: hsla(0, 0%, 100%, 0.5);
   z-index: 2;
+  @media screen and (max-width: 380px) {
+    font-size: 5rem;
+  }
 }
 
 #current_bpm {
@@ -104,6 +109,9 @@ const lastBpmColour = computed(() =>
   font-size: 7rem;
   font-weight: 600;
   z-index: 2;
+  @media screen and (max-width: 380px) {
+    font-size: 5rem;
+  }
 }
 
 #last {
