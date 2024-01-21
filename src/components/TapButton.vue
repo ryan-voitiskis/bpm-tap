@@ -9,7 +9,6 @@ const state = reactive({
   initialTime: 0,
   showBpm: false,
   showTapPrompt: true,
-  theme: "dark" as "dark" | "light", // TODO
 })
 
 function reset() {
@@ -37,24 +36,25 @@ function tap() {
 
 const backgroundColour = computed(() =>
   state.bpm
-    ? getBPMColour(state.bpm, state.theme)
+    ? getBPMColour(state.bpm)
     : state.lastBpm
       ? lastBpmColour.value
-      : state.theme === "dark"
-        ? "#1b1e20"
-        : "#f5f5f5",
+      : "#1b1e20",
 )
 
-const lastBpmColour = computed(() => getBPMColour(state.lastBpm, state.theme))
+const lastBpmColour = computed(() =>
+  state.lastBpm > 0 ? getBPMColour(state.lastBpm) : "transparent",
+)
 </script>
 
 <template>
   <div @click="tap()" id="tap_button">
-    <div v-if="state.lastBpm !== 0" id="last">
-      <span id="last_label">LAST: </span>{{ state.lastBpm.toFixed(1) }}
+    <div v-if="lastBpmColour" id="last">
+      <span v-if="state.lastBpm" id="last_label">LAST: </span>
+      {{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}
     </div>
     <span v-if="state.showTapPrompt" id="tap_prompt">TAP</span>
-    <span v-else-if="state.showBpm" id="current_bpm" class="number">
+    <span v-else-if="state.showBpm" id="current_bpm">
       {{ state.bpm.toFixed(1) }}
     </span>
   </div>
@@ -79,7 +79,7 @@ const lastBpmColour = computed(() => getBPMColour(state.lastBpm, state.theme))
   transform: translate(-50%, -50%);
   font-size: 9rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: hsla(0, 0%, 100%, 0.5);
   z-index: 2;
 }
 
