@@ -48,11 +48,7 @@ function getBPMColour(bpm: number): string {
 }
 
 const backgroundColour = computed(() =>
-  state.bpm
-    ? getBPMColour(state.bpm)
-    : state.lastBpm
-      ? lastBpmColour.value
-      : "#1b1e20",
+  state.bpm ? getBPMColour(state.bpm) : "#1b1e20",
 )
 
 const lastBpmColour = computed(() =>
@@ -64,12 +60,12 @@ const lastBpmColour = computed(() =>
   <main @click="tap()" id="tap_button">
     <div v-if="lastBpmColour" id="last">
       <span v-if="state.lastBpm" id="last_label">LAST: </span>
-      <span class="number">
+      <span>
         {{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}
       </span>
     </div>
     <span v-if="state.showTapPrompt" id="tap_prompt">TAP</span>
-    <span v-else-if="state.showBpm" id="current_bpm" class="number">
+    <span v-else-if="state.showBpm" id="current_bpm">
       {{ state.bpm.toFixed(1) }}
     </span>
   </main>
@@ -85,6 +81,10 @@ const lastBpmColour = computed(() =>
   font-weight: 600;
   user-select: none;
   transition: background-color 100ms linear;
+  &:active #current_bpm,
+  &:active #tap_prompt {
+    text-shadow: 0 0 1rem #ffffff88;
+  }
 }
 
 #tap_prompt {
@@ -96,6 +96,7 @@ const lastBpmColour = computed(() =>
   font-weight: 600;
   color: hsla(0, 0%, 100%, 0.5);
   z-index: 2;
+  transition: text-shadow 50ms linear;
   @media screen and (max-width: 380px) {
     font-size: 5rem;
   }
@@ -109,6 +110,7 @@ const lastBpmColour = computed(() =>
   font-size: 7rem;
   font-weight: 600;
   z-index: 2;
+  transition: text-shadow 50ms linear;
   @media screen and (max-width: 380px) {
     font-size: 5rem;
   }
