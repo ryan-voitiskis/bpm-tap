@@ -5,3 +5,5 @@ node_modules
 .idea
 *.log
 .env
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo
