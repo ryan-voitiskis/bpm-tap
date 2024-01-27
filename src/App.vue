@@ -54,28 +54,24 @@ const backgroundColour = computed(() =>
 const lastBpmColour = computed(() =>
   state.lastBpm > 0 ? getBPMColour(state.lastBpm) : "transparent",
 )
+
+const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
 </script>
 
 <template>
   <main>
     <button @click="tap()" id="tap_button">
-      <div v-if="lastBpmColour" id="last">
-        <span v-if="state.lastBpm" id="last_label"
-          >{{ state.tapCount }} LAST:
-        </span>
-        <span>
-          {{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}
-        </span>
+      <div v-show="lastBpmColour" id="last">
+        <span v-show="state.lastBpm" id="last_label">LAST: </span>
+        <span>{{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}</span>
       </div>
-      <span v-if="state.showTapPrompt" id="tap_prompt">TAP</span>
-      <span v-else-if="state.showBpm" id="current_bpm">
-        {{ state.bpm.toFixed(1) }}
-      </span>
+      <span v-show="state.showTapPrompt" id="tap_prompt">TAP</span>
+      <span id="current_bpm">{{ currentBpm }}</span>
     </button>
   </main>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 main {
   width: 100vw;
   height: 100vh;
@@ -86,7 +82,6 @@ main {
   border: none;
   padding: 0;
   margin: 0;
-  background-color: v-bind(backgroundColour);
   width: 100%;
   height: 100%;
   cursor: pointer;
@@ -96,6 +91,7 @@ main {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  background-color: v-bind(backgroundColour);
   transition: background-color 100ms linear;
 }
 
@@ -134,11 +130,11 @@ main {
   display: flex;
   width: 100%;
   height: 6rem;
-  background-color: v-bind(lastBpmColour);
   color: #fff;
   font-weight: 600;
   font-size: 3rem;
   z-index: 2;
+  background-color: v-bind(lastBpmColour);
   #last_label {
     font-size: 1.5rem;
     font-weight: 600;

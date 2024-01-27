@@ -2,7 +2,7 @@
   font-family: "Sono";
   src: url("./Sono-VariableFont.ttf") format("truetype");
   font-weight: 100 900;
-  font-display: swap;
+  font-display: block;
 }
 
 *,
