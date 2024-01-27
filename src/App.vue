@@ -57,34 +57,46 @@ const lastBpmColour = computed(() =>
 </script>
 
 <template>
-  <main @click="tap()" id="tap_button">
-    <div v-if="lastBpmColour" id="last">
-      <span v-if="state.lastBpm" id="last_label">LAST: </span>
-      <span>
-        {{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}
+  <main>
+    <button @click="tap()" id="tap_button">
+      <div v-if="lastBpmColour" id="last">
+        <span v-if="state.lastBpm" id="last_label"
+          >{{ state.tapCount }} LAST:
+        </span>
+        <span>
+          {{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}
+        </span>
+      </div>
+      <span v-if="state.showTapPrompt" id="tap_prompt">TAP</span>
+      <span v-else-if="state.showBpm" id="current_bpm">
+        {{ state.bpm.toFixed(1) }}
       </span>
-    </div>
-    <span v-if="state.showTapPrompt" id="tap_prompt">TAP</span>
-    <span v-else-if="state.showBpm" id="current_bpm">
-      {{ state.bpm.toFixed(1) }}
-    </span>
+    </button>
   </main>
 </template>
 
 <style scoped lang="scss">
-#tap_button {
-  background-color: v-bind(backgroundColour);
+main {
   width: 100vw;
   height: 100vh;
+}
+
+#tap_button {
+  display: block;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background-color: v-bind(backgroundColour);
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   color: white;
   font-weight: 600;
   user-select: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   transition: background-color 100ms linear;
-  &:active #current_bpm,
-  &:active #tap_prompt {
-    text-shadow: 0 0 1rem #ffffff88;
-  }
 }
 
 #tap_prompt {
@@ -96,7 +108,6 @@ const lastBpmColour = computed(() =>
   font-weight: 600;
   color: hsla(0, 0%, 100%, 0.5);
   z-index: 2;
-  transition: text-shadow 50ms linear;
   @media screen and (max-width: 380px) {
     font-size: 5rem;
   }
@@ -106,18 +117,18 @@ const lastBpmColour = computed(() =>
   justify-content: center;
   align-items: baseline;
   display: flex;
-  margin-top: 10rem;
+  margin-top: 0;
   font-size: 7rem;
   font-weight: 600;
   z-index: 2;
-  transition: text-shadow 50ms linear;
   @media screen and (max-width: 380px) {
     font-size: 5rem;
   }
 }
 
 #last {
-  position: relative;
+  position: absolute;
+  top: 0;
   justify-content: center;
   align-items: baseline;
   display: flex;
