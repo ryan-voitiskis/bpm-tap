@@ -7,12 +7,12 @@ const MIN = 80 // low end of bpm range clamp
 const MAX = 170 // high end of bpm range clamp
 
 const state = reactive({
-  bpm: 0,
-  lastBpm: 0,
+  bpm: 148.7,
+  lastBpm: 118.2,
   tapCount: 0,
   initialTime: 0,
-  showBpm: false,
-  showTapPrompt: true,
+  showBpm: true,
+  showTapPrompt: false,
   lastLocked: false,
 })
 
@@ -24,7 +24,7 @@ function reset() {
   state.showTapPrompt = true
 }
 
-let timeout = setTimeout(reset, 0)
+let timeout = 0
 
 function tap() {
   if (state.tapCount === 0) {
