@@ -50,7 +50,7 @@ function getBPMColour(bpm: number): string {
 }
 
 const backgroundColour = computed(() =>
-  state.bpm ? getBPMColour(state.bpm) : "#1b1e20",
+  state.bpm ? getBPMColour(state.bpm) : "#292f38",
 )
 
 const lastBpmColour = computed(() =>
@@ -78,7 +78,7 @@ const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
 
 <style lang="scss">
 #tap_button {
-  color: #fff;
+  color: hsla(0, 0%, 100%, 0.86);
   border: none;
   padding: 0;
   margin: 0;
@@ -100,7 +100,7 @@ const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
   transform: translate(-50%, -50%);
   font-size: 9rem;
   font-weight: 600;
-  color: hsla(0, 0%, 100%, 0.5);
+  color: hsla(0, 0%, 100%, 0.86);
   z-index: 2;
 }
 
@@ -153,7 +153,7 @@ const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
   border: none;
   svg {
     color: #fff;
-    opacity: 0.7;
+    opacity: 0.86;
     height: 24px;
     width: 24px;
     transition: transform 100ms;
