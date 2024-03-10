@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { reactive, computed } from "vue"
+import LockButton from "./components/LockButton.vue"
 import * as d3 from "d3-interpolate"
 
 const min = 80 // low end of bpm range clamp
@@ -12,10 +13,11 @@ const state = reactive({
   initialTime: 0,
   showBpm: false,
   showTapPrompt: true,
+  lastLocked: false,
 })
 
 function reset() {
-  state.lastBpm = state.bpm
+  if (!state.lastLocked || !state.lastBpm) state.lastBpm = state.bpm
   state.bpm = 0
   state.tapCount = 0
   state.showBpm = false
@@ -62,8 +64,11 @@ const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
   <main>
     <button @click="tap()" id="tap_button">
       <div v-show="lastBpmColour" id="last">
-        <span v-show="state.lastBpm" id="last_label">LAST: </span>
+        <span v-show="state.lastBpm" id="last_label">
+          {{ state.lastLocked ? "LOCKED" : "LAST" }}:
+        </span>
         <span>{{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}</span>
+        <LockButton v-model="state.lastLocked" />
       </div>
       <span v-show="state.showTapPrompt" id="tap_prompt">TAP</span>
       <span id="current_bpm">{{ currentBpm }}</span>
@@ -129,7 +134,7 @@ main {
   align-items: baseline;
   display: flex;
   width: 100%;
-  height: 6rem;
+  height: 64px;
   color: #fff;
   font-weight: 600;
   font-size: 3rem;
@@ -140,14 +145,19 @@ main {
     font-weight: 600;
     margin-right: 0.5rem;
   }
+  @media screen and (max-width: 380px) {
+    font-size: 2rem;
+    padding: 14px 0 0 16px;
+    justify-content: start;
+  }
 }
 #last::after {
   content: "";
   position: absolute;
-  top: 6rem;
+  top: 64px;
   left: 0;
   right: 0;
-  height: 6rem;
+  height: 64px;
   background: linear-gradient(to bottom, v-bind(lastBpmColour), transparent);
 }
 </style>
