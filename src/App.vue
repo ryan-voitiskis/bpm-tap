@@ -3,8 +3,8 @@ import { reactive, computed } from "vue"
 import LockButton from "./components/LockButton.vue"
 import * as d3 from "d3-interpolate"
 
-const min = 80 // low end of bpm range clamp
-const max = 170 // high end of bpm range clamp
+const MIN = 80 // low end of bpm range clamp
+const MAX = 170 // high end of bpm range clamp
 
 const state = reactive({
   bpm: 0,
@@ -42,11 +42,11 @@ function tap() {
 function getBPMColour(bpm: number): string {
   const lowColour = "hsl(155, 60%, 50%)"
   const highColour = "hsl(342, 70%, 62%)"
-  const clampedBpm = Math.min(Math.max(bpm, min), max)
+  const clampedBpm = Math.min(Math.max(bpm, MIN), MAX)
   return d3.interpolateCubehelixLong(
     lowColour,
     highColour,
-  )((clampedBpm - min) / (max - min))
+  )((clampedBpm - MIN) / (MAX - MIN))
 }
 
 const backgroundColour = computed(() =>
@@ -65,10 +65,10 @@ const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
     <button @click="tap()" id="tap_button">
       <div v-show="lastBpmColour" id="last">
         <span v-show="state.lastBpm" id="last_label">
-          {{ state.lastLocked ? "LOCKED" : "LAST" }}:
+          {{ state.lastLocked ? "LOCK" : "LAST" }}:
         </span>
         <span>{{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}</span>
-        <LockButton v-model="state.lastLocked" />
+        <LockButton v-model="state.lastLocked" id="lock_button" />
       </div>
       <span v-show="state.showTapPrompt" id="tap_prompt">TAP</span>
       <span id="current_bpm">{{ currentBpm }}</span>
@@ -77,20 +77,13 @@ const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
 </template>
 
 <style lang="scss">
-main {
-  width: 100vw;
-  height: 100vh;
-}
-
 #tap_button {
-  display: block;
+  color: #fff;
   border: none;
   padding: 0;
   margin: 0;
   width: 100%;
   height: 100%;
-  cursor: pointer;
-  color: white;
   font-weight: 600;
   user-select: none;
   -webkit-appearance: none;
@@ -109,9 +102,6 @@ main {
   font-weight: 600;
   color: hsla(0, 0%, 100%, 0.5);
   z-index: 2;
-  @media screen and (max-width: 380px) {
-    font-size: 5rem;
-  }
 }
 
 #current_bpm {
@@ -122,9 +112,6 @@ main {
   font-size: 7rem;
   font-weight: 600;
   z-index: 2;
-  @media screen and (max-width: 380px) {
-    font-size: 5rem;
-  }
 }
 
 #last {
@@ -134,30 +121,69 @@ main {
   align-items: baseline;
   display: flex;
   width: 100%;
-  height: 64px;
-  color: #fff;
+  height: 80px;
   font-weight: 600;
   font-size: 3rem;
   z-index: 2;
+  padding: 8px 0 0;
   background-color: v-bind(lastBpmColour);
   #last_label {
     font-size: 1.5rem;
     font-weight: 600;
     margin-right: 0.5rem;
   }
-  @media screen and (max-width: 380px) {
-    font-size: 2rem;
-    padding: 14px 0 0 16px;
-    justify-content: start;
-  }
 }
+
 #last::after {
   content: "";
   position: absolute;
-  top: 64px;
+  top: 80px;
   left: 0;
   right: 0;
-  height: 64px;
+  height: 80px;
   background: linear-gradient(to bottom, v-bind(lastBpmColour), transparent);
+}
+
+#lock_button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 29px 16px 16px;
+  background: none;
+  border: none;
+  svg {
+    color: #fff;
+    opacity: 0.7;
+    height: 24px;
+    width: 24px;
+    transition: transform 100ms;
+  }
+  &:hover {
+    svg {
+      transform: scale(1.1);
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #tap_prompt,
+  #current_bpm {
+    font-size: 5rem;
+  }
+
+  #last {
+    font-size: 2rem;
+    padding: 24px 0 0 16px;
+    justify-content: start;
+  }
+
+  #last_label {
+    font-size: 1.3rem;
+    margin-right: 0.3rem;
+  }
+
+  #lock_button {
+    padding-top: 30px;
+  }
 }
 </style>

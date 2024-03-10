@@ -3,13 +3,11 @@ const locked = defineModel({ default: false, type: Boolean })
 </script>
 
 <template>
-  <button @click.stop="locked = !locked" id="lock_button">
+  <button @click.stop="locked = !locked">
     <!-- svg from https://lucide.dev/icons/lock-keyhole + /lock-keyhole-open -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      width="24"
-      height="24"
       fill="none"
       stroke="currentColor"
       stroke-width="2"
@@ -23,28 +21,3 @@ const locked = defineModel({ default: false, type: Boolean })
     </svg>
   </button>
 </template>
-
-<style lang="scss">
-#lock_button {
-  color: #fff;
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: flex;
-  height: 64px;
-  width: 64px;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  svg {
-    transition: transform 100ms;
-  }
-  &:hover {
-    svg {
-      transform: scale(1.1);
-    }
-  }
-}
-</style>
