@@ -3,7 +3,7 @@ const locked = defineModel({ default: false, type: Boolean })
 </script>
 
 <template>
-  <button @click.stop="locked = !locked">
+  <button @click.stop="locked = !locked" aria-label="lock last bpm">
     <!-- svg from https://lucide.dev/icons/lock-keyhole + /lock-keyhole-open -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
