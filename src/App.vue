@@ -62,13 +62,13 @@ const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
 
 <template>
   <main>
-    <button @click="tap()" id="tap_button" aria-label="tap">
+    <button id="tap_button" aria-label="tap" @click="tap()">
       <div v-show="lastBpmColour" id="last">
         <span v-show="state.lastBpm" id="last_label">
           {{ state.lastLocked ? "LOCK" : "LAST" }}:
         </span>
         <span>{{ state.lastBpm ? state.lastBpm.toFixed(1) : "" }}</span>
-        <LockButton v-model="state.lastLocked" id="lock_button" />
+        <LockButton id="lock_button" v-model="state.lastLocked" />
       </div>
       <span v-show="state.showTapPrompt" id="tap_prompt">TAP</span>
       <span id="current_bpm">{{ currentBpm }}</span>
