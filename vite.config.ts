@@ -8,6 +8,9 @@ export default defineConfig({
     vue(),
     VitePWA({
       registerType: "autoUpdate",
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+      },
       manifest: {
         name: "bpm tap",
         short_name: "bpm tap",
@@ -44,9 +47,6 @@ export default defineConfig({
             type: "image/png",
           },
         ],
-      },
-      workbox: {
-        navigateFallback: "/index.html",
       },
     }),
   ],
