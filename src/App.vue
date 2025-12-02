@@ -100,6 +100,7 @@ const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
     height: 100%;
     z-index: 3;
     transition: background-color 70ms linear;
+    pointer-events: none;
   }
   &:active::before {
     background-color: hsla(0, 0%, 100%, 0.15);
@@ -164,6 +165,7 @@ const currentBpm = computed(() => (state.showBpm ? state.bpm.toFixed(1) : ""))
   padding: 29px 16px 16px;
   background: none;
   border: none;
+  z-index: 4;
   svg {
     color: #fff;
     opacity: 0.86;
