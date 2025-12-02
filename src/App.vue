@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, computed } from "vue"
+import { reactive, computed, onMounted, onUnmounted } from "vue"
 import LockButton from "./components/LockButton.vue"
 import * as d3 from "d3-interpolate"
 
@@ -38,6 +38,16 @@ function tap() {
   clearTimeout(timeout)
   timeout = setTimeout(reset, 2000)
 }
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.code === "Space") {
+    e.preventDefault()
+    tap()
+  }
+}
+
+onMounted(() => window.addEventListener("keydown", handleKeydown))
+onUnmounted(() => window.removeEventListener("keydown", handleKeydown))
 
 function getBPMColour(bpm: number): string {
   const lowColour = "hsl(155, 60%, 50%)"
