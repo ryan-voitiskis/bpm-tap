@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.1.0](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.0.0...v1.1.0) (2026-02-24)
+
+
+### Bug Fixes
+
+* **ci:** run release job on node 22.14.0 ([8168008](https://github.com/ryan-voitiskis/bpm-tap/commit/8168008a2b23dadffc3d0cdfa2567904490020aa))
+* make lock button clickable by disabling pointer events on overlay ([cbf9f7e](https://github.com/ryan-voitiskis/bpm-tap/commit/cbf9f7e930594aad3f0be716813bbd72b7c1aa68))
+* update js-yaml to patch prototype pollution ([323dcc5](https://github.com/ryan-voitiskis/bpm-tap/commit/323dcc50d86da56ae5643fdc4470b6cd4dd2b600))
+
+
+### Features
+
+* add spacebar keyboard support for tapping ([63eeae9](https://github.com/ryan-voitiskis/bpm-tap/commit/63eeae9e67926436d1eefba68f1b6cb3437087dc))
+
 # 1.0.0 (2025-08-08)
 
 
