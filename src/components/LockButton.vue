@@ -1,9 +1,20 @@
-<script setup lang="ts">
+<script setup vapor lang="ts">
+import { computed } from "vue"
+
 const locked = defineModel({ default: false, type: Boolean })
+const label = computed(() =>
+  locked.value ? "Unlock saved tempo" : "Lock saved tempo",
+)
 </script>
 
 <template>
-  <button aria-label="lock last bpm" @click.stop="locked = !locked">
+  <button
+    type="button"
+    :aria-label="label"
+    :aria-pressed="locked"
+    :title="label"
+    @click.stop="locked = !locked"
+  >
     <!-- svg from https://lucide.dev/icons/lock-keyhole + /lock-keyhole-open -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,6 +24,7 @@ const locked = defineModel({ default: false, type: Boolean })
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
+      aria-hidden="true"
     >
       <circle cx="12" cy="16" r="1" />
       <rect width="18" height="12" x="3" y="10" rx="2" />

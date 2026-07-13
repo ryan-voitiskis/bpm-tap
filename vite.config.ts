@@ -14,8 +14,8 @@ export default defineConfig({
       manifest: {
         name: "bpm tap",
         short_name: "bpm tap",
-        theme_color: "#1b1e20",
-        background_color: "#FFFFFF",
+        theme_color: "#292f38",
+        background_color: "#292f38",
         display: "standalone",
         scope: "/",
         start_url: "/",

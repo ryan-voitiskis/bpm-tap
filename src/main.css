@@ -2,7 +2,7 @@
   font-family: "Sono";
   src: url("./Sono-VariableFont.ttf") format("truetype");
   font-weight: 100 900;
-  font-display: block;
+  font-display: swap;
 }
 
 *,
@@ -15,22 +15,29 @@
 }
 
 body {
-  transition:
-    color 0.5s,
-    background-color 0.5s;
-  line-height: 1.6;
+  min-width: 240px;
+  min-height: 100%;
+  overflow: hidden;
+  color: rgb(255 255 255 / 92%);
+  background: #292f38;
+  line-height: 1.5;
   font-size: 15px;
+  overscroll-behavior: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-main {
-  width: 100vw;
-  height: 100vh;
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
 }
 
 button {
   -webkit-tap-highlight-color: transparent;
+  color: inherit;
+  font: inherit;
   cursor: pointer;
 }
