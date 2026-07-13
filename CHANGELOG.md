@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.2.0...v1.2.1) (2026-07-13)
+
+
+### Bug Fixes
+
+* keep spacebar tapping after locking tempo ([251f778](https://github.com/ryan-voitiskis/bpm-tap/commit/251f77857159024066fb03c4c707573d5a8e8edf))
+
 # [1.2.0](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.1.0...v1.2.0) (2026-07-13)
 
 
