@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.2.0](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.1.0...v1.2.0) (2026-07-13)
+
+
+### Features
+
+* enhance tap tempo experience ([9a55728](https://github.com/ryan-voitiskis/bpm-tap/commit/9a55728f420c5083521e8a33002cd468354e64ad))
+
 # [1.1.0](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.0.0...v1.1.0) (2026-02-24)
 
 
