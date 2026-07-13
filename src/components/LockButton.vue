@@ -5,6 +5,18 @@ const locked = defineModel({ default: false, type: Boolean })
 const label = computed(() =>
   locked.value ? "Unlock saved tempo" : "Lock saved tempo",
 )
+
+function toggleLock(event: MouseEvent) {
+  locked.value = !locked.value
+
+  // Pointer clicks should hand Space back to the app-wide tap shortcut.
+  // Keyboard-generated clicks keep focus so the button remains operable with
+  // Space and Enter as expected.
+  if (event.detail > 0) {
+    const button = event.currentTarget as HTMLButtonElement
+    button.blur()
+  }
+}
 </script>
 
 <template>
@@ -13,7 +25,7 @@ const label = computed(() =>
     :aria-label="label"
     :aria-pressed="locked"
     :title="label"
-    @click.stop="locked = !locked"
+    @click.stop="toggleLock"
   >
     <!-- svg from https://lucide.dev/icons/lock-keyhole + /lock-keyhole-open -->
     <svg
