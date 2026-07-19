@@ -1,6 +1,6 @@
 <script setup vapor lang="ts">
 import { computed, onMounted, onUnmounted, reactive } from "vue"
-import LockButton from "./components/LockButton.vue"
+import LockButton from "@/components/LockButton.vue"
 
 const MIN_COLOUR_BPM = 80
 const MAX_COLOUR_BPM = 170
@@ -35,6 +35,8 @@ function calculateBpm() {
 }
 
 function resetSession() {
+  clearTimeout(resetTimeout)
+
   if (!state.lastLocked && state.bpm) state.lastBpm = state.bpm
 
   state.bpm = 0
@@ -147,7 +149,7 @@ const surfaceLabel = computed(() => {
   </main>
 </template>
 
-<style lang="scss">
+<style>
 main {
   position: relative;
   width: 100%;
@@ -176,25 +178,25 @@ main {
   );
   transition: background-color 120ms linear;
   touch-action: manipulation;
+}
 
-  &::after {
-    position: absolute;
-    inset: 0;
-    background: rgb(255 255 255 / 12%);
-    content: "";
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 80ms linear;
-  }
+#tap_button::after {
+  position: absolute;
+  inset: 0;
+  background: rgb(255 255 255 / 12%);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 80ms linear;
+}
 
-  &:active::after {
-    opacity: 1;
-  }
+#tap_button:active::after {
+  opacity: 1;
+}
 
-  &:focus-visible {
-    outline: 3px solid rgb(255 255 255 / 88%);
-    outline-offset: -7px;
-  }
+#tap_button:focus-visible {
+  outline: 3px solid rgb(255 255 255 / 88%);
+  outline-offset: -7px;
 }
 
 .tempo-display {
@@ -350,16 +352,16 @@ main {
   transition:
     background-color 120ms ease,
     transform 120ms ease;
+}
 
-  svg {
-    width: 1.35rem;
-    height: 1.35rem;
-  }
+#lock_button svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
 
-  &:focus-visible {
-    outline: 2px solid rgb(255 255 255 / 88%);
-    outline-offset: 2px;
-  }
+#lock_button:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 88%);
+  outline-offset: 2px;
 }
 
 @media (hover: hover) {

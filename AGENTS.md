@@ -8,7 +8,8 @@ accessible, and dependency-light.
 - `npm ci` — install dependencies
 - `npm run dev` — start Vite
 - `npm run type-check` — check TypeScript
-- `npm run lint` — lint and fix files
+- `npm run lint` — check lint rules
+- `npm run lint:fix` — fix lint issues
 - `npm run format` — format `src/`
 - `npm run build` — type-check and build for production
 

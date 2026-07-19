@@ -27,7 +27,7 @@ function toggleLock(event: MouseEvent) {
     :title="label"
     @click.stop="toggleLock"
   >
-    <!-- svg from https://lucide.dev/icons/lock-keyhole + /lock-keyhole-open -->
+    <!-- Lucide lock-keyhole icons; see public/licenses/Lucide-LICENSE.txt. -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"

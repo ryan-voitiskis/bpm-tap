@@ -32,8 +32,9 @@ Run `npm run format` to format `src/`.
 
 ## Stack
 
-Vue 3, TypeScript, Vite, SCSS, and `vite-plugin-pwa`.
+Vue 3, TypeScript, Vite, CSS, and `vite-plugin-pwa`.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE). Bundled third-party assets retain their original licenses in
+`public/licenses/`.
