@@ -124,7 +124,7 @@ Set these secrets in your GitHub repository:
 
 ## 🏗️ Technology Stack
 
-- **Framework**: Vue 3.6 Vapor Mode beta with Composition API
+- **Framework**: Vue 3.6 Vapor Mode release candidate with Composition API
 - **Build Tool**: Vite
 - **Language**: TypeScript
 - **Styling**: SCSS
