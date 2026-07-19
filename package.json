@@ -1,6 +1,6 @@
 {
   "name": "bpm-tap",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "private": true,
   "scripts": {
     "build": "npm run type-check && npm run build-only",

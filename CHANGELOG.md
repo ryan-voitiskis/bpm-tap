@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.3](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.2.2...v1.2.3) (2026-07-19)
+
+
+### Bug Fixes
+
+* harden tap reset and streamline tooling ([3a110dd](https://github.com/ryan-voitiskis/bpm-tap/commit/3a110dda204829d45e6cf3d6c5421768e3f85137))
+
 ## [1.2.2](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.2.1...v1.2.2) (2026-07-19)
 
 
