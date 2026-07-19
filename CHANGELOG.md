@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.2](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.2.1...v1.2.2) (2026-07-19)
+
+
+### Bug Fixes
+
+* **deps:** release Vue 3.6 RC upgrade ([98469d4](https://github.com/ryan-voitiskis/bpm-tap/commit/98469d4548195be70a343e66430d616bfff92d5b))
+
 ## [1.2.1](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.2.0...v1.2.1) (2026-07-13)
 
 
