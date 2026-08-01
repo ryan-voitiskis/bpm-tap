@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.4](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.2.3...v1.2.4) (2026-08-01)
+
+
+### Bug Fixes
+
+* stabilize long tap tempo sessions ([#2](https://github.com/ryan-voitiskis/bpm-tap/issues/2)) ([1f33034](https://github.com/ryan-voitiskis/bpm-tap/commit/1f3303460b5d4f7e5974c54f68a3c25b5e72332f))
+
 ## [1.2.3](https://github.com/ryan-voitiskis/bpm-tap/compare/v1.2.2...v1.2.3) (2026-07-19)
 
 
