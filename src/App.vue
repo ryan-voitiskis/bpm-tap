@@ -1,11 +1,15 @@
 <script setup vapor lang="ts">
 import { computed, onMounted, onUnmounted, reactive } from "vue"
 import LockButton from "@/components/LockButton.vue"
+import {
+  estimateSessionTempo,
+  getResetDelay,
+  inferBeatIncrement,
+  type TempoTap,
+} from "@/tempo"
 
 const MIN_COLOUR_BPM = 80
 const MAX_COLOUR_BPM = 170
-const MAX_INTERVALS = 8
-const RESET_DELAY_MS = 2000
 
 const state = reactive({
   bpm: 0,
@@ -14,24 +18,20 @@ const state = reactive({
   lastLocked: false,
 })
 
-const tapTimes: number[] = []
+const taps: TempoTap[] = []
 let resetTimeout: ReturnType<typeof setTimeout> | undefined
+let tempoChangeEvidence = 0
 
 function calculateBpm() {
-  const intervals = tapTimes
-    .slice(1)
-    .map((time, index) => time - tapTimes[index]!)
+  const estimate = estimateSessionTempo(taps, tempoChangeEvidence)
 
-  // Once enough samples exist, ignore the fastest and slowest taps. This keeps
-  // one early miss from skewing the reading while retaining a responsive window.
-  const samples =
-    intervals.length >= 5
-      ? [...intervals].sort((a, b) => a - b).slice(1, -1)
-      : intervals
-  const averageInterval =
-    samples.reduce((total, interval) => total + interval, 0) / samples.length
+  tempoChangeEvidence = estimate.tempoChangeEvidence
 
-  return 60000 / averageInterval
+  // A sustained change is a new measurement rather than an outlier. Retain
+  // the recent taps so the display adapts without returning to two-tap noise.
+  if (estimate.discardTapCount) taps.splice(0, estimate.discardTapCount)
+
+  return 60000 / estimate.beatInterval
 }
 
 function resetSession() {
@@ -41,26 +41,35 @@ function resetSession() {
 
   state.bpm = 0
   state.tapCount = 0
-  tapTimes.length = 0
+  taps.length = 0
+  tempoChangeEvidence = 0
   resetTimeout = undefined
 }
 
 function tap() {
   const now = performance.now()
-  const lastTap = tapTimes[tapTimes.length - 1]
+  let lastTap = taps[taps.length - 1]
 
   // Timers can be throttled in background tabs, so also enforce the reset when
   // the next tap arrives.
-  if (lastTap && now - lastTap >= RESET_DELAY_MS) resetSession()
+  if (lastTap && now - lastTap.time >= getResetDelay(state.bpm)) {
+    resetSession()
+    lastTap = undefined
+  }
 
-  tapTimes.push(now)
-  if (tapTimes.length > MAX_INTERVALS + 1) tapTimes.shift()
+  const beatIncrement = inferBeatIncrement(taps, now)
 
   state.tapCount++
-  if (tapTimes.length > 1) state.bpm = calculateBpm()
+  if (beatIncrement) {
+    taps.push({
+      beat: lastTap ? lastTap.beat + beatIncrement : 0,
+      time: now,
+    })
+    if (taps.length > 1) state.bpm = calculateBpm()
+  }
 
   clearTimeout(resetTimeout)
-  resetTimeout = setTimeout(resetSession, RESET_DELAY_MS)
+  resetTimeout = setTimeout(resetSession, getResetDelay(state.bpm))
 }
 
 function handleKeydown(event: KeyboardEvent) {
